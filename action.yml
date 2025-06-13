@@ -3,6 +3,13 @@ branding:
   icon: image
   color: white
 description: 'Renders all mermaid diagrams in all Markdown files in a repository'
+inputs:
+  ignore:
+    description: 'Path patterns to ignore (supports glob patterns)'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.ignore }}
