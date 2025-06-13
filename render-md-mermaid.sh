@@ -74,8 +74,10 @@ do
     mermaid_file=${mermaid_img#*|}
     #we check the second parameter (that might be unchecked)
     if [[ "$Param2" == "in-container" ]]; then
+        echo "processing in container Markdown file: $markdown_input, image file: $image_file, mermaid file: $mermaid_file"
         /home/mermaidcli/node_modules/.bin/mmdc -p /puppeteer-config.json -o "$image_file" -i "$mermaid_file" -t neutral -C ".render-md-mermaid.css" -c ".render-md-mermaid-config.json" -s 4
     else
+        echo "processing with docker Markdown file: $markdown_input, image file: $image_file, mermaid file: $mermaid_file"
         docker run --rm -t -v "$PWD:/data" minlag/mermaid-cli:latest -o "/data/$image_file" -i "/data/$mermaid_file" -t neutral -C "/data/.render-md-mermaid.css" -c "/data/.render-md-mermaid-config.json" -s 4
     fi
     if [[ "$image_file" =~ ^.*\.svg$ ]]; then
