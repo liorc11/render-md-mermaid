@@ -1,26 +1,16 @@
 #!/usr/bin/env bash
 
-# Parse command line arguments
-IGNORE_PATTERNS=()
-while [[ $# -gt 0 ]]; do
-    case $1 in
-        --ignore)
-            IGNORE_PATTERNS+=("$2")
-            shift 2
-            ;;
-        *)
-            shift
-            ;;
-    esac
-done
-
-# Build find command with ignore patterns
+# Default behavior - find all .md files
 FIND_CMD="find . -name \"*.md\""
 
-# Add ignore patterns to find command
-for pattern in "${IGNORE_PATTERNS[@]}"; do
-    FIND_CMD="$FIND_CMD -not -path \"$pattern\""
-done
+# If arguments are provided, treat them as ignore patterns
+if [ $# -gt 0 ]; then
+    for pattern in "$@"; do
+        if [[ -n "$pattern" ]]; then
+            FIND_CMD="$FIND_CMD -not -path \"$pattern\""
+        fi
+    done
+fi
 
 # Execute find command and process each markdown file
 eval "$FIND_CMD" | while read -r md; do
