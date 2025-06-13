@@ -8,6 +8,6 @@ USER mermaidcli
 
 COPY entrypoint.sh /entrypoint.sh
 COPY render-md-mermaid.sh /render-md-mermaid.sh
-COPY 12.02_webui_technology_stack.md /12.02_webui_technology_stack.md
+#COPY 12.02_webui_technology_stack.md /12.02_webui_technology_stack.md
 
 ENTRYPOINT ["/entrypoint.sh"]
